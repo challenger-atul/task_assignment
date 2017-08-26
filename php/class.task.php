@@ -69,7 +69,10 @@ class Task
         $stmt->bindparam(":studid", $studid);
         $stmt->execute();
         $taskRow=$stmt->fetch(PDO::FETCH_ASSOC);
-        return $taskRow;
+        if($stmt -> rowCount() > 0)
+          return $taskRow;
+        else
+          return null;
     }
     public function getAllTasks()
     {

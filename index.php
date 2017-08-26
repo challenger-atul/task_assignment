@@ -1,66 +1,65 @@
 <?php
-require_once './php/dbconfig.php';
+  require_once './php/dbconfig.php';
 
-if($user -> is_loggedin() != "")
-{
-	$user -> redirect('./php/fork.php');
-}
+  if($user -> is_loggedin() != "")
+  {
+    $user -> redirect('./php/fork.php');
+  }
 
-if(isset($_POST['btn-login']))
-{
-	$uname = $_POST['txt_uname_email'];
-	$umail = $_POST['txt_uname_email'];
-	$upass = $_POST['txt_password'];
+  if(isset($_POST['btn-login']))
+  {
+    $uname = $_POST['txt_uname_email'];
+    $umail = $_POST['txt_uname_email'];
+    $upass = $_POST['txt_password'];
 
-	if($user -> login($uname, $umail, $upass))
-	{
-		$user -> redirect('./php/fork.php');
-	}
-	else
-	{
-		$error = "Wrong Details !";
-	}
-}
+    if($user -> login($uname, $umail, $upass))
+    {
+      $user -> redirect('./php/fork.php');
+    }
+    else
+    {
+      $error = "Wrong Details !";
+    }
+  }
 ?>
 
 <!DOCTYPE html >
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Login</title>
-</head>
-<body>
-<div class="container">
-     <div class="form-container">
-        <form method="post">
-            <h2>Sign in.</h2><hr />
-            <?php
-            if(isset($error))
-            {
-                  ?>
-                  <div class="alert alert-danger">
-                      <i class="glyphicon glyphicon-warning-sign"></i> &nbsp; <?php echo $error; ?> !
-                  </div>
-                  <?php
-            }
-            ?>
-            <div class="form-group">
-             <input type="text" class="form-control" name="txt_uname_email" placeholder="Username or E mail ID" required />
-            </div>
-            <div class="form-group">
-             <input type="password" class="form-control" name="txt_password" placeholder="Your Password" required />
-            </div>
-            <div class="clearfix"></div><hr />
-            <div class="form-group">
-             <button type="submit" name="btn-login" class="btn btn-block btn-primary">
-                 <i class="glyphicon glyphicon-log-in"></i>&nbsp;SIGN IN
-                </button>
-            </div>
-            <br />
-            <label>Don't have account yet ! <a href="./php/sign-up.php">Sign Up</a></label>
-        </form>
-       </div>
-</div>
+  <head>
+    <meta charset="UTF-8">
 
-</body>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+    <link rel="stylesheet" href="./css/login.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - TaskMe</title>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="center-align" id="title">
+        <h1>Task me</h1>
+      </div>
+      <div id="form-container" class="row">
+        <form method="post" id="login-form" class="col s10 offset-s1">
+          <h2>Sign in</h2>
+          <div class="section">
+            <input type="text" name="txt_uname_email" placeholder="Username or E mail ID" required />
+          </div>
+          <div class="section">
+            <input type="password" name="txt_password" placeholder="Your Password" required />
+          </div>
+          <div class="section">
+            <button type="submit" name="btn-login" class="btn purple">
+              SIGN IN
+            </button>
+          </div>
+          <label>Don't have account yet ! <a href="./php/sign-up.php">Sign Up</a></label>
+        </form>
+      </div>
+    </div>
+  </body>
 </html>
