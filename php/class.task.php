@@ -78,7 +78,14 @@ class Task
     {
         $stmt = $this->db->prepare("SELECT * FROM tasks");
         $stmt->execute();
-        $taskRows=$stmt->fetchAll();
+        $taskRows=$stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $taskRows;
+    }
+    public function getUserList()
+    {
+        $stmt = $this->db->prepare("SELECT user_id, user_fname, user_lname FROM users");
+        $stmt->execute();
+        $taskRows=$stmt->fetchAll(PDO::FETCH_ASSOC);
         return $taskRows;
     }
 }

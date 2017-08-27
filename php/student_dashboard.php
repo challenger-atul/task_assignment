@@ -25,16 +25,17 @@
     <script type="text/javascript" src="../js/materialize.min.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
+			var currTask;
 			function completeAjax()
 			{
 				$.ajax({
 					url: './completetask.php',
 					type: 'POST',
 					dataType: 'json',
-					data: {complete: 'true', taskid: "<?=$currTask['taskid']?>"},
+					data: {complete: 'true', taskid: currTask['taskid']},
 				})
 				.done(function() {
-					taskComplete();
+					currentTaskAjax();
 				})
 			}
 			function currentTaskAjax()
@@ -49,23 +50,29 @@
 				})
 			}
 			currentTaskAjax();
+			setInterval(currentTaskAjax, 2000);
 			function handleCurrentTask (data) {
 				console.log(data);
+				currTask = data['task'];
 				if(data['isnew'] == 'true')
 				{
-					$("#task-description").append(data['task']['taskid']);
-					$("#task-description").append(data['task']['task_desc']);
-					var profname = data['prof']['user_fname'] + " " + data['prof']['user_lname'];
-					$("#prof-cont").append(profname);
-					$("#date-time").append(data['task']['time']);
-
-
+					$(".task-content").slideDown();
+					$(".completed").slideUp();
+					if(data['task']['taskid'] != $(".task-content").data('taskid')){
+						$(".task-content").data('taskid',data['task']['taskid']);
+						$("#task-description").text(data['task']['task_desc']);
+						var profname = data['prof']['user_fname'] + " " + data['prof']['user_lname'];
+						$("#prof-cont").text(profname);
+						$("#date-time").text(data['task']['time']);
+						$(".task-content").css('visibility','visible');
+					}
 				}
 				else
 				{
-					$(".task-content").hide();
-					$("#task-container").append('You have no incomplete task.');
+					$(".task-content").slideUp();
+					$(".completed").slideDown();
 				}
+
 			}
 			$("#complete-cont div").on('click', function() {
 				completeAjax();
@@ -78,8 +85,13 @@
 		<h1>Dashboard</h1>
 		
 		<div id="task-container" class="card-panel">
-			<div class="white-text indigo darken-4 center-align card-heading">My task</div>
-			<div class="task-content row">
+			<div class="white-text indigo darken-4 center-align card-heading">
+				My task
+			</div>
+			<div class="completed section center-align" style="display:none">
+					You have no incomplete task.
+			</div>
+			<div class="task-content row gray-text" style="display:none">
 				<div id="desc-container" class="col s6 ">
 					<div id="task-description" class="section">
 					</div>
@@ -91,7 +103,7 @@
 					<div id="date-time" class="section valign-wrapper">
 					</div><hr>
 					<div id="complete-cont" class="section valign-wrapper">
-						<div class="wave-effect waves-light btn">
+						<div class="waves-effect waves-light btn indigo darken-4">
 						Completed
 						</div>
 					</div>
@@ -99,6 +111,11 @@
 			</div>
 		</div>
 		<a href="logout.php?logout=true">logout</a>
+		<div class="row">
+			<div class="col-6 center-align">
+				<a class="waves-effect waves-light btn indigo darken-4" href="alltasks.php">All Tasks</a>
+			</div>
+		</div>
 	</div>
 </body>
 </html>
