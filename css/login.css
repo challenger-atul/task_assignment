@@ -1,0 +1,9 @@
+#title
+{
+	margin: 2vh 0;
+	text-transform: uppercase;
+}
+.btn:hover
+{
+	background-color: #ba3ad0 !important;
+}

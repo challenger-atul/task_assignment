@@ -1,0 +1,33 @@
+.card-heading
+{
+	font-size: 2em;
+	padding: 5%;
+}
+#prof-complete-cont
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+#prof-complete-cont div
+{
+	flex-grow: 1;
+}
+.task-content
+{
+	display: flex;
+	align-items: stretch;
+}
+.card-panel
+{
+	padding: 0;
+}
+.task-content
+{
+	padding: 8%;
+	padding-top: 0;
+}
+#complete-cont .btn
+{
+	padding: 0 1.7rem;
+}

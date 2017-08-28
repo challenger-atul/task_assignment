@@ -1,0 +1,18 @@
+.fixed-action-btn.horizontal{
+	position: relative;
+	right: 0;
+	bottom: 0;
+	padding: 0;
+}
+.fixed-action-btn.horizontal ul{
+	right: 50px;
+}
+.fixed-action-btn.horizontal ul li{
+	margin: 0 5px;
+}
+.btn-floating.white.actions i{
+	color: #1a237e;
+}
+tr{
+	transition: background-color 1s;
+}
