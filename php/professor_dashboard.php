@@ -7,7 +7,7 @@
 	$user_id = $_SESSION['user_session'];
 	$profRow = $user -> getUserInfo($user_id);
 	$taskRow = json_encode($task -> getMyTasks($user_id));
-	$userlist = json_encode($task -> getUserList());
+	$userlist = json_encode($user -> getUserList());
 ?>		
 <html>
 	<head>
@@ -24,7 +24,7 @@
 				var usertable = JSON.parse('<?=$userlist?>');
 				var tasklist = JSON.parse('<?=$taskRow?>');
 				var userlist = [];
-				for(i = 0; i < usertable.length; i++) {
+				for(var i = 0; i < usertable.length; i++) {
 					userlist[usertable[i]['user_id']] = usertable[i]['user_fname'] + " " + usertable[i]['user_lname'];
 				}
 				function makeTable() {
@@ -101,6 +101,7 @@
 								});
 							else
 								$("#" + id).parents('tr').removeClass('red lighten-4').children('.status').text('Complete');
+							fab.find('.complete').remove();
 					})
 				});
 			});
@@ -110,7 +111,7 @@
 		<div class="container">
 			<h1>My Tasks</h1>
 			<a class="section waves-effect waves-light btn indigo darken-4" href="alltasks.php">All Tasks</a>
-			<a class="section waves-effect waves-light btn indigo darken-4" href="assigntask.php">Assign Tasks</a>
+			<a class="section waves-effect waves-light btn indigo darken-4" href="assigntaskpage.php">Assign Tasks</a>
 			<div class="table-container">
 			</div>
 		</div>

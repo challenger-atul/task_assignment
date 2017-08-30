@@ -8,6 +8,20 @@ class USER
 		$this -> db = $DB_con;
 	}
 
+  public function getUserList()
+    {
+        $stmt = $this->db->prepare("SELECT user_id, user_fname, user_lname FROM users");
+        $stmt->execute();
+        $taskRows=$stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $taskRows;
+    }
+  public function getStudentList()
+    {
+        $stmt = $this->db->prepare("SELECT user_id, user_fname, user_lname FROM users WHERE type = 'student'");
+        $stmt->execute();
+        $taskRows=$stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $taskRows;
+    }
   public function getUserInfo($id)
   {
       $stmt = $this->db->prepare("SELECT * FROM users WHERE user_id=:userid");

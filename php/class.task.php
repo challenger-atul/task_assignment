@@ -11,7 +11,8 @@ class Task
     {
        try
        {
-           $stmt = $this->db->prepare("INSERT INTO tasks(stud_id, prof_id, task_desc, status) VALUES(:studid, :profid, :task_desc, 0)");
+           $stmt = $this->
+           db->prepare("INSERT INTO tasks(stud_id, prof_id, task_desc, status) VALUES(:studid, :profid, :task_desc, 0)");
            $stmt->bindparam(":studid", $studid);
            $stmt->bindparam(":profid", $profid);
            $stmt->bindparam(":task_desc", $task_desc);
@@ -22,6 +23,39 @@ class Task
        {
            echo $e -> getMessage();
        }    
+    }
+    public function addGroupTask($id, $profid, $task_desc)
+    {
+       try
+       {
+          $groupid = $this -> getPresentGroup() + 1;
+          foreach($id as $studid){
+            $stmt = $this -> db->prepare("INSERT INTO tasks(groupid, stud_id, prof_id, task_desc, status) VALUES(:groupid, :studid, :profid, :task_desc, 0)");
+            $stmt->bindparam(":groupid", $groupid);
+            $stmt->bindparam(":studid", $studid);
+            $stmt->bindparam(":profid", $profid);
+            $stmt->bindparam(":task_desc", $task_desc);
+            $stmt->execute(); 
+          }
+          return $stmt; 
+       }
+       catch(PDOException $e)
+       {
+           echo $e -> getMessage();
+       }    
+    }
+    public function getPresentGroup()
+    {
+      try
+       {
+          $stmt = $this -> db->prepare("SELECT MAX(groupid) AS lastgroupid FROM tasks");         
+          $stmt->execute(); 
+          return $stmt -> fetchColumn(); 
+       }
+       catch(PDOException $e)
+       {
+           echo $e -> getMessage();
+       } 
     }
     public function completeTask($taskid)
     {
@@ -83,13 +117,7 @@ class Task
         $taskRows=$stmt->fetchAll(PDO::FETCH_ASSOC);
         return $taskRows;
     }
-    public function getUserList()
-    {
-        $stmt = $this->db->prepare("SELECT user_id, user_fname, user_lname FROM users");
-        $stmt->execute();
-        $taskRows=$stmt->fetchAll(PDO::FETCH_ASSOC);
-        return $taskRows;
-    }
+    
     public function getMyTasks($profid)
     {
       $stmt = $this->db->prepare("SELECT * FROM tasks WHERE prof_id=:profid  ORDER BY taskid ASC");
@@ -114,6 +142,19 @@ class Task
         echo $e -> getMessage();
       } 
     }
-
+    public function getIncompleteIds()
+    {
+      try
+      {
+          $stmt = $this -> db -> prepare("SELECT stud_id FROM tasks WHERE status = 0");
+          $stmt->execute();
+          $ids = $stmt -> fetchAll(PDO::FETCH_ASSOC);
+          return $ids;
+      }
+      catch(PDOException $e)
+      {
+        echo $e -> getMessage();
+      }
+    }
 }
 ?>
