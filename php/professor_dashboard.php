@@ -104,6 +104,29 @@
 							fab.find('.complete').remove();
 					})
 				});
+
+				$(".edittask").on('click',function(){
+					var fab = $(this).parents('.fixed-action-btn');
+					var id = fab.attr('id');
+					var groupid = fab.data('groupid');
+
+					var newTask = window.prompt("Type new task here : ");
+
+
+					$.ajax({
+						url: 'edittask.php',
+						type: 'POST',
+						dataType: 'json',
+						data: {'taskid': id , 'newTask': newTask},
+						success: function(result){
+							window.reload();
+						}
+						
+					});			
+
+					
+
+				});
 			});
 	</script>
 	</head>
