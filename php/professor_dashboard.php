@@ -117,9 +117,9 @@
 						url: 'edittask.php',
 						type: 'POST',
 						dataType: 'json',
-						data: {'taskid': id , 'newTask': newTask},
+						data: {'taskid': id , 'newTask': newTask , 'groupid': groupid},
 						success: function(result){
-							window.reload();
+							alert(result);
 						}
 						
 					});			
